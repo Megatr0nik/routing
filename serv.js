@@ -1,50 +1,50 @@
 
 
-
-// const http = require('node:http');
-// const fs = require('fs');
+const { regUser, loginUser } = require('./services/dataBase.js');
 
 const express = require('express');
 
 const app = express();
 
-
-// const { checkUser, giveFriends } = require('./services/index.js');
-
-const { regUser } = require('./services/register-user.js');
-
-
-
 const host = 'localhost';
 const port = 8000;
+const headers = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': 'http://localhost:3000',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Request-Method': '*'
+}
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.all('/', (req, res) => {
+app.options('*', (req, res) => {
+    console.log('OPTION', req.method);
+    res.set(headers);
+    res.send('OK');
+});
 
-    if (req.method !== 'POST') {
-        res.set({
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'http://localhost:3000',
-            'Access-Control-Allow-Headers': '*'
-        });
-        res.send('Ok');
-    } else {
-        res.set({
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'http://localhost:3000',
-            'Access-Control-Allow-Headers': '*'
-        });
+app.post('/person', (req, res) => {
+    res.set(headers);
+    const data = regUser(req.body);
+    console.log('serv ', data);
+    data.then(d => {
+        res.send(true, d);
+    });
+});
 
-        // console.log('serv ', req.body)
+app.post('/login', (req, res) => {
 
-        res.send([true, regUser(req.body)]);
-    }
-
+    res.set(headers);
+    const data = loginUser(req.body);
+    data.then(d => {
+        res.send([true, d]);
+    });
+});
 
 
-})
+
+
 
 app.listen(port, () => {
     console.log(`Server is run on http://${host}:${port}`);

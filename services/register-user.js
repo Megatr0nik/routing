@@ -15,7 +15,6 @@ const regUser = (userData) => {
 
     return dataF;
 
-
 }
 
 
