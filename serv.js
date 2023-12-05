@@ -1,9 +1,10 @@
 
 
+const { getAvatar } = require('./services/sendFile.js');
 const { regUser, loginUser } = require('./services/dataBase.js');
+// const img = './static/avatars/269312438.png';
 
 const express = require('express');
-
 const app = express();
 
 const host = 'localhost';
@@ -17,6 +18,7 @@ const headers = {
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static('static'));
 
 app.options('*', (req, res) => {
     console.log('OPTION', req.method);
