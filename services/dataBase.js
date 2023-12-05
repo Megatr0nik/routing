@@ -7,7 +7,7 @@ const client = new MongoClient(URI);
 
 exports.regUser = async (data) => {
 
-    console.log(data);
+    console.log('REG', data);
 
     try {
 
@@ -16,19 +16,21 @@ exports.regUser = async (data) => {
         const db = client.db("data");
         const collection = db.collection('person');
 
+        console.log(collection);
+
         if (data[0]) {
-            const userPresent = await collection.findOne({ email: data[1].email });
+            const userPresent = await collection.findOne({ email: data.email });
             console.log('present', userPresent);
             if (!userPresent) {
                 console.log('Add new user...')
                 await collection.insertOne(data[1]);
-                return await collection.findOne({ email: data[1].email });
+                return await collection.findOne({ email: data.email });
             } else {
                 console.log('This user present)');
                 return 'This user present)';
             }
         } else {
-            return await collection.findOne({ email: data[1].email });
+            return await collection.findOne({ email: data.email });
         }
 
     } catch {
@@ -45,7 +47,7 @@ exports.loginUser = async (data) => {
         const db = client.db("data");
         const collection = db.collection('person');
 
-        const userPresent = await collection.findOne({ email: data[1].email });
+        const userPresent = await collection.findOne({ email: data.email });
         if (userPresent !== null) {
 
             return userPresent;

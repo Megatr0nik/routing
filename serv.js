@@ -1,8 +1,8 @@
 
 
-const { getAvatar } = require('./services/sendFile.js');
+
 const { regUser, loginUser } = require('./services/dataBase.js');
-// const img = './static/avatars/269312438.png';
+
 
 const express = require('express');
 const app = express();
@@ -27,11 +27,14 @@ app.options('*', (req, res) => {
 });
 
 app.post('/person', (req, res) => {
+
+    console.log(req.url, req.headers)
+
     res.set(headers);
     const data = regUser(req.body);
     console.log('serv ', data);
     data.then(d => {
-        res.send(true, d);
+        res.send([true, d]);
     });
 });
 
