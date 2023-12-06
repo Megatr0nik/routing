@@ -1,10 +1,11 @@
 
 
 const { getAvatar } = require('./services/sendFile.js');
-const { regUser, loginUser } = require('./services/dataBase.js');
+const { regUser, loginUser, giveData } = require('./services/dataBase.js');
 // const img = './static/avatars/269312438.png';
 
 const express = require('express');
+const { giveFriends } = require('./services/index.js');
 const app = express();
 
 const host = 'localhost';
@@ -21,27 +22,35 @@ app.use(express.json());
 app.use(express.static('static'));
 
 app.options('*', (req, res) => {
-    console.log('OPTION', req.method);
     res.set(headers);
     res.send('OK');
+});
+
+app.post('/friends', (req, res) => {
+    console.log(req.body)
+    res.set(headers);
+    const data = giveData(req.body);
+    data.then(d => {
+        console.log('FRIENDS', d);
+        res.send(d);
+    }).catch(err => console.log(err));
+
 });
 
 app.post('/person', (req, res) => {
     res.set(headers);
     const data = regUser(req.body);
-    console.log('serv ', data);
     data.then(d => {
-        res.send(true, d);
-    });
+        res.send(d);
+    }).catch(err => console.log(err));
 });
 
 app.post('/login', (req, res) => {
-
     res.set(headers);
     const data = loginUser(req.body);
     data.then(d => {
-        res.send([true, d]);
-    });
+        res.send(d);
+    }).catch(err => console.log(err));
 });
 
 

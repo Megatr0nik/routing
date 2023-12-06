@@ -1,34 +1,24 @@
 const { users } = require("../userdb/users");
+// const { giveData } = require("./dataBase");
 
-const checkUser = (data) => {
-    // console.log(data)
-    const { login, pass, reg } = JSON.parse(data);
+exports.checkUser = (loginData, userPresent) => {
+    // console.log('CHECK', loginData.email, userPresent.email);
 
-    if (users.hasOwnProperty(login)) {
-        if (users[login].pass === pass) {
-            return [1, users[login]];
+    if (userPresent.email === loginData.email) {
+        if (userPresent.pass === loginData.pass) {
+            return [false, userPresent];
         } else {
-            return [0, 'Denaied'];
+            console.log('Wrong password or email...')
+            return [false, 'Wrong password or email...'];
         }
     } else {
-        return [0, 'No user'];
+        return [false, 'No user. Wrong password or email. Хз короче...'];
     }
-
-
 }
 
-exports.checkUser = checkUser;
 
 
-const giveFriends = (data) => {
+// exports.giveFriends = (data) => {
 
-    console.log('friends', JSON.parse(data));
-
-    const arr = JSON.parse(data).map(e => {
-        return users[e]
-    })
-
-    return arr;
-}
-
-exports.giveFriends = giveFriends;
+//     return giveData(data);
+// }
