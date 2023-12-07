@@ -38,6 +38,9 @@ app.post('/friends', (req, res) => {
 });
 
 app.post('/person', (req, res) => {
+
+    console.log(req.url, req.headers)
+
     res.set(headers);
     const data = regUser(req.body);
     data.then(d => {
