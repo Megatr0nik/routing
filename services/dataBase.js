@@ -78,13 +78,11 @@ exports.giveData = async (data) => {
             const db = client.db("data");
             const collection = db.collection("person");
             const data = await collection.findOne({ email: e })
-                .then(d => arr.push(d));
+                .then(d => d ? arr.push(d) : null);
         } catch {
             console.error('Give friends error');
         } finally {
             client.close();
-            console.log(arr);
-            // return arr;
         }
     }
 

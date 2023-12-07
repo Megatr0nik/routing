@@ -26,20 +26,25 @@ app.options('*', (req, res) => {
     res.send('OK');
 });
 
+app.get('/avatars/*', (req, res) => {
+    console.log('GET', req.body);
+    console.log('GET', req.url);
+    console.log();
+    res.send();
+});
+
 app.post('/friends', (req, res) => {
-    console.log(req.body)
+
     res.set(headers);
     const data = giveData(req.body);
     data.then(d => {
-        console.log('FRIENDS', d);
+
         res.send(d);
     }).catch(err => console.log(err));
 
 });
 
 app.post('/person', (req, res) => {
-
-    console.log(req.url, req.headers)
 
     res.set(headers);
     const data = regUser(req.body);
