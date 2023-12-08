@@ -1,1 +1,0 @@
-"vasomaksum@gmail.com":{"name":"Олександр","lastname":"Васо","login":"vasomaksum@gmail.com","pass":"123","pass2":"123"},

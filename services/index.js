@@ -1,4 +1,4 @@
-const { users } = require("../userdb/users");
+// const { users } = require("../userdb/users");
 // const { giveData } = require("./dataBase");
 
 exports.checkUser = (loginData, userPresent) => {

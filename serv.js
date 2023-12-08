@@ -33,6 +33,10 @@ app.get('/avatars/*', (req, res) => {
     res.send();
 });
 
+app.get('/gallery', (req, res) => {
+    res.send();
+});
+
 app.post('/friends', (req, res) => {
 
     res.set(headers);
