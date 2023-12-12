@@ -1,6 +1,6 @@
 
 const { MongoClient } = require('mongodb');
-const { checkUser } = require('./index.js');
+const { checkUser } = require('./check-user.js');
 
 const URI = 'mongodb://localhost:27017/';
 
@@ -9,33 +9,34 @@ const client = new MongoClient(URI);
 exports.regUser = async (data) => {
 
     try {
-
         await client.connect();
 
         const db = client.db("data");
         const collection = db.collection('person');
 
         // refactoring
-        if (data[0]) {
+        if (true) {
 
-            const userPresent = await collection.findOne({ email: data[1].email });
+            const userPresent = await collection.findOne({ email: data.email });
+
             if (!userPresent) {
                 console.log('Add new user...')
-                await collection.insertOne(data[1]);
-                return [false, await collection.findOne({ email: data[1].email })];
+                await collection.insertOne(data);
+                return await collection.findOne({ email: data.email });
             } else {
                 console.log('This user present)');
-                return [true, 'This user present)'];
+                return 'The user is already registered...';
             }
-        } else { // Нахера воно?)))
-            console.log('login...?');
-            return await collection.findOne({ email: data[1].email });
         }
+        // else { // Нахера воно?)))
+        //     console.log('login...?');
+        //     return await collection.findOne({ email: data[1].email });
+        // }
 
     } catch {
-        console.error('error');
+        console.error('Registration error');
     } finally {
-        console.log('close connection...');
+        console.log('Registration, close connection...');
         await client.close();
     }
 }
@@ -45,14 +46,14 @@ exports.loginUser = async (loginData) => {
         await client.connect();
         const db = client.db("data");
         const collection = db.collection('person');
-        const userPresent = await collection.findOne({ email: loginData[1].email });
+        const userPresent = await collection.findOne({ email: loginData.email });
 
         if (userPresent !== null) {
-            return (checkUser(loginData[1], userPresent));
+            return (checkUser(loginData, userPresent));
 
         } else {
             console.log('No user register...');
-            return [false, 'No user register...'];
+            return 'No user register...';
         }
 
     } catch {
@@ -65,30 +66,30 @@ exports.loginUser = async (loginData) => {
 
 exports.giveData = async (data) => {
     const arr = [];
+    // console.log('Mongo find', data[0])
 
-    client.connect();
-    const db = client.db("data");
-    const collection = db.collection("person");
-
-
-
-    const mongoFind = async (e) => {
-        try {
-            client.connect();
-            const db = client.db("data");
-            const collection = db.collection("person");
-            const data = await collection.findOne({ email: e })
-                .then(d => d ? arr.push(d) : null);
-        } catch {
-            console.error('Give friends error');
-        } finally {
-            client.close();
-        }
+    try {
+        client.connect();
+        const db = client.db("data");
+        const collection = db.collection("person");
+        await collection.findOne({ email: data[0] })
+            .then(d => d ?
+                arr.push({
+                    _id: d._id,
+                    email: d.email,
+                    firstName: d.firstName,
+                    lastName: d.lastName,
+                    avatar: d.avatar,
+                    post: d.post
+                }) :
+                null);
+    } catch {
+        console.error('Give friends error...');
+    } finally {
+        console.log('Close connection...')
+        client.close();
     }
 
-    for (i = 0; i < data.length; i++) {
-        await mongoFind(data[i]);
-    }
-
+    // console.log('ARR', arr);
     return arr;
 }

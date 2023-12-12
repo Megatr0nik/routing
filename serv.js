@@ -5,7 +5,8 @@ const { regUser, loginUser, giveData } = require('./services/dataBase.js');
 // const img = './static/avatars/269312438.png';
 
 const express = require('express');
-const { giveFriends } = require('./services/index.js');
+const { giveFriends } = require('./services/check-user.js');
+const { readFileOnPath } = require('./services/fs-worker.js');
 const app = express();
 
 const host = 'localhost';
@@ -21,42 +22,48 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('static'));
 
+///////////////////OPTIONS////////////////////////
 app.options('*', (req, res) => {
     res.set(headers);
     res.send('OK');
 });
+///////////////////OPTIONS////////////////////////
 
-app.get('/avatars/*', (req, res) => {
-    console.log('GET', req.body);
-    console.log('GET', req.url);
-    console.log();
-    res.send();
-});
 
-app.get('/gallery', (req, res) => {
-    res.send();
+// app.get('/avatars', (req, res) => {
+//     console.log('GET', req.body);
+//     console.log('GET', req.url);
+//     console.log();
+//     res.send();
+// });
+
+app.get('*/gallery', (req, res) => {
+    res.set(headers);
+    const data = readFileOnPath(req.url);
+    res.send(data);
 });
 
 app.post('/friends', (req, res) => {
-
     res.set(headers);
     const data = giveData(req.body);
     data.then(d => {
-
         res.send(d);
     }).catch(err => console.log(err));
-
 });
 
-app.post('/person', (req, res) => {
 
+///////////////////REGISTRATION////////////////////////
+app.post('/register', (req, res) => {
     res.set(headers);
     const data = regUser(req.body);
     data.then(d => {
         res.send(d);
     }).catch(err => console.log(err));
 });
+///////////////////REGISTRATION////////////////////////
 
+
+///////////////////LOGIN////////////////////////
 app.post('/login', (req, res) => {
     res.set(headers);
     const data = loginUser(req.body);
@@ -64,7 +71,7 @@ app.post('/login', (req, res) => {
         res.send(d);
     }).catch(err => console.log(err));
 });
-
+///////////////////LOGIN////////////////////////
 
 
 
@@ -72,58 +79,3 @@ app.post('/login', (req, res) => {
 app.listen(port, () => {
     console.log(`Server is run on http://${host}:${port}`);
 });
-
-
-// const requestListener = async (request, response) => {
-
-//     let dataRecive = '';
-
-//     console.log(request.url);
-//     console.log(url.parse(request.url))
-
-
-//     if (request.method === 'OPTIONS') {
-//         response.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-//         response.setHeader('Access-Control-Allow-Headers', '*');
-//         response.end('Hello')
-//     }
-
-//     if (request.method === 'POST') {
-//         request.on('data', (data) => {
-
-//             dataRecive += data;
-//         })
-//             .on('end', () => {
-//                 console.log('data ', dataRecive);
-//                 if (request.url === '/userdb/') {
-//                     response.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-//                     response.setHeader('Access-Control-Allow-Headers', '*');
-//                     response.write(JSON.stringify(giveFriends(dataRecive)));
-//                     response.end();
-//                 } else {
-//                     response.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-//                     response.setHeader('Access-Control-Allow-Headers', '*');
-//                     response.write(JSON.stringify(checkUser(dataRecive)));
-//                     response.end();
-//                 }
-
-
-//             });
-//     }
-
-//     if (request.method === 'GET') {
-
-//         console.log(request.url);
-
-//         response.setHeader("Content-Type", "image/png");
-//         fs.readFile('.' + request.url, (err, image) => {
-//             response.end(image)
-//         });
-//     }
-// }
-
-
-// const server = http.createServer(requestListener);
-// server.listen(port, host, () => {
-//     console.log(`Server is run on http://${host}:${port}`)
-// });
