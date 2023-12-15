@@ -1,49 +1,34 @@
 
-const { MongoClient } = require('mongodb');
+// const { MongoClient } = require('mongodb');
 const { checkUser } = require('./check-user.js');
 
-const URI = 'mongodb://localhost:27017/';
+// const client = new MongoClient('mongodb://localhost:27017/');
 
-const client = new MongoClient(URI);
-
-exports.regUser = async (data) => {
-
+exports.regUser = async (data, client) => {
     try {
-        await client.connect();
-
+        // await client.connect();
         const db = client.db("data");
         const collection = db.collection('person');
+        const userPresent = await collection.findOne({ email: data.email });
 
-        // refactoring
-        if (true) {
-
-            const userPresent = await collection.findOne({ email: data.email });
-
-            if (!userPresent) {
-                console.log('Add new user...')
-                await collection.insertOne(data);
-                return await collection.findOne({ email: data.email });
-            } else {
-                console.log('This user present)');
-                return 'The user is already registered...';
-            }
+        if (userPresent) {
+            console.log('The user is already registered...');
+            return 'The user is already registered...';
+        } else {
+            console.log('Add new user...')
+            await collection.insertOne(data);
+            return await collection.findOne({ email: data.email });
         }
-        // else { // Нахера воно?)))
-        //     console.log('login...?');
-        //     return await collection.findOne({ email: data[1].email });
-        // }
-
     } catch {
-        console.error('Registration error');
+        console.error('Registration error...');
     } finally {
-        console.log('Registration, close connection...');
-        await client.close();
+        console.log('"REGISTRATION", close connection...');
+        // await client.close();
     }
 }
 
-exports.loginUser = async (loginData) => {
+exports.loginUser = async (loginData, client) => {
     try {
-        await client.connect();
         const db = client.db("data");
         const collection = db.collection('person');
         const userPresent = await collection.findOne({ email: loginData.email });
@@ -52,44 +37,47 @@ exports.loginUser = async (loginData) => {
             return (checkUser(loginData, userPresent));
 
         } else {
-            console.log('No user register...');
-            return 'No user register...';
+            console.log('No user registered...');
+            return 'No user registered...';
         }
 
     } catch {
         console.error('Login error...');
     } finally {
-        console.log('close connection...');
-        await client.close();
+        console.log('"LOGIN", close connection...');
+        // await client.close();
     }
 }
 
-exports.giveData = async (data) => {
-    const arr = [];
-    // console.log('Mongo find', data[0])
+exports.giveFriendsUser = async (data, client) => {
 
     try {
-        client.connect();
-        const db = client.db("data");
-        const collection = db.collection("person");
-        await collection.findOne({ email: data[0] })
-            .then(d => d ?
-                arr.push({
-                    _id: d._id,
-                    email: d.email,
-                    firstName: d.firstName,
-                    lastName: d.lastName,
-                    avatar: d.avatar,
-                    post: d.post
-                }) :
-                null);
+        const collection = client.db("data").collection("person");
+        const option = {
+            projection: {
+                _id: 1,
+                firstName: 1,
+                lastName: 1,
+                avatar: 1,
+                friends: 1,
+                post: 1
+            }
+        }
+        const arrData = await collection.find({ "email": { $in: data } }, option)
+            .toArray((err, dat) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(dat);
+                }
+            });
+        return arrData;
     } catch {
         console.error('Give friends error...');
+        return [];
     } finally {
         console.log('Close connection...')
-        client.close();
     }
-
-    // console.log('ARR', arr);
-    return arr;
 }
+
+
