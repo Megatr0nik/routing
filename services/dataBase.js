@@ -3,16 +3,17 @@
 const { checkUser } = require('./check-user.js');
 const { clientDataBase } = require('./connectToMongo.js');
 
-const option = {
-    projection: {
-        _id: 1,
-        firstName: 1,
-        lastName: 1,
-        avatar: 1,
-        friends: 1,
-        post: 1
-    }
-}
+
+// const option = {
+//     projection: {
+//         _id: 1,
+//         firstName: 1,
+//         lastName: 1,
+//         avatar: 1,
+//         friends: 1,
+//         post: 1
+//     }
+// }
 
 exports.regUser = async (data) => {
 
@@ -69,16 +70,16 @@ exports.giveFriendsUser = async (data) => {
 
     try {
         const collection = client.db('data').collection('person');
-        // const option = {
-        //     projection: {
-        //         _id: 1,
-        //         firstName: 1,
-        //         lastName: 1,
-        //         avatar: 1,
-        //         friends: 1,
-        //         post: 1
-        //     }
-        // }
+        const option = {
+            projection: {
+                _id: 1,
+                firstName: 1,
+                lastName: 1,
+                avatar: 1,
+                friends: 1,
+                post: 1
+            }
+        }
         const arrData = await collection.find({ "email": { $in: data } }, option)
             .toArray((err, dat) => {
                 if (err) {

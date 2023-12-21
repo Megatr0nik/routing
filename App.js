@@ -30,29 +30,30 @@ app.options('*', (req, res) => {
     res.send('OK');
 });
 
-app.all('*', (req, res) => {
+// app.all('*', (req, res) => {
 
-    const body = req.body;
-    console.log('LOG =>|', req.body);
-    res.set(HEADERS);
-    res.send({ 'LOG...': body });
+//     const body = req.body;
+//     console.log('LOG =>|', req.body);
+//     res.set(HEADERS);
+//     res.send('LOG...', body, req.url);
 
-});
+// });
 
 
-app.get('*/gallery', (req, res) => {
-    res.set(HEADERS);
-    const data = readFileOnPath(req.url);
-    res.send(data);
-});
+// app.get('*/gallery', (req, res) => {
+//     res.set(HEADERS);
+//     console.log(req.url)
+//     const data = readFileOnPath(req.url);
+//     res.send(data);
+// });
 
-app.post('/friends', (req, res) => {
-    res.set(HEADERS);
-    const data = giveFriendsUser(req.body);
-    data.then(d => {
-        res.send(d);
-    }).catch(err => console.log(err));
-});
+// app.post('/friends', (req, res) => {
+//     res.set(HEADERS);
+//     const data = giveFriendsUser(req.body);
+//     data.then(d => {
+//         res.send(d);
+//     }).catch(err => console.log(err));
+// });
 
 app.listen(PORT, () => {
     console.log(`Server is run on http://${HOST}:${PORT}`);

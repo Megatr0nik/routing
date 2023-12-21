@@ -1,8 +1,11 @@
 
 const dbUri = 'mongodb://localhost:27017/';
+const onlineConStr = 'mongodb+srv://vasoshoni:shoni3birdie@birdie.tcqicss.mongodb.net/?retryWrites=true&w=majority';
+
+
 
 const MongoClient = require('mongodb').MongoClient;
-const client = new MongoClient(dbUri);
+const client = new MongoClient(onlineConStr);
 
 
 exports.clientDataBase = async () => {

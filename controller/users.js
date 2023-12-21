@@ -5,8 +5,8 @@ const HEADERS = {
     'Access-Control-Request-Method': '*'
 }
 
-const { loginUser, regUser } = require("../services/dataBase");
-const { writeFile } = require("../services/fs-worker");
+const { loginUser, regUser, giveFriendsUser } = require("../services/dataBase");
+const { writeFile, readFileOnPath, createFolder } = require("../services/fs-worker");
 
 
 const loginUserHandler = (req, res) => {
@@ -35,6 +35,8 @@ const registerUserHandler = (req, res) => {
                 res.set(HEADERS);
                 res.send(d);
             } else {
+                console.log(d)
+                createFolder(`./static/person/${d._id}/gallery`);
                 writeFile(avatar, `/person/${d._id}/avatar`);
                 res.set(HEADERS);
                 res.send(d);
@@ -44,8 +46,30 @@ const registerUserHandler = (req, res) => {
 }
 
 
+const postFriendsUserHandler = (req, res) => {
+    const friends = req.body.friends;
+
+    giveFriendsUser(friends)
+        .then(d => {
+            res.set(HEADERS);
+            res.send(d);
+        })
+        .catch(err => console.log(err));
+}
+
+const getGalleryHandler = (req, res) => {
+    console.log(req.url);
+    const data = readFileOnPath(req.url);
+    res.set(HEADERS);
+    res.send(data);
+
+}
+
+
 
 module.exports = {
     loginUserHandler,
-    registerUserHandler
+    registerUserHandler,
+    postFriendsUserHandler,
+    getGalleryHandler
 }
