@@ -2,10 +2,10 @@
   "name": "routing",
   "version": "1.0.0",
   "description": "",
-  "main": "serv.js",
+  "main": "App.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "node serv.js"
+    "run": "node App.js"
   },
   "author": "",
   "license": "ISC",

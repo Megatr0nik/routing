@@ -1,5 +1,5 @@
 const fs = require('fs');
-
+const uri = ''
 
 exports.readFileOnPath = (dir) => {
     console.log(dir);
@@ -12,6 +12,12 @@ exports.readFileOnPath = (dir) => {
 
 
 exports.writeFile = (file, path) => {
-    console.log(path)
-    fs.mkdirSync
+    const { buffer, originalname, size } = file;
+    console.log(file)
+    console.log('FILE', path)
+    fs.mkdirSync(`./static${path}`, { recursive: true });
+    fs.writeFile(`./static${path}${originalname}`, buffer, (err) => {
+        if (err) throw err;
+        console.log('Save...' + size);
+    });
 }
