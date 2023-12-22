@@ -1,8 +1,6 @@
 
 const express = require('express');
-
-const { regUser, loginUser, giveFriendsUser } = require('./services/dataBase.js');
-const { readFileOnPath, writeFile } = require('./services/fs-worker.js');
+const morgan = require('morgan');
 const router = require('./routes/index.js');
 
 const app = express();
@@ -17,11 +15,10 @@ const HEADERS = {
 }
 
 
+app.use(morgan('short'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('static'));
-
-
 app.use(router);
 
 
@@ -29,31 +26,6 @@ app.options('*', (req, res) => {
     res.set(HEADERS);
     res.send('OK');
 });
-
-// app.all('*', (req, res) => {
-
-//     const body = req.body;
-//     console.log('LOG =>|', req.body);
-//     res.set(HEADERS);
-//     res.send('LOG...', body, req.url);
-
-// });
-
-
-// app.get('*/gallery', (req, res) => {
-//     res.set(HEADERS);
-//     console.log(req.url)
-//     const data = readFileOnPath(req.url);
-//     res.send(data);
-// });
-
-// app.post('/friends', (req, res) => {
-//     res.set(HEADERS);
-//     const data = giveFriendsUser(req.body);
-//     data.then(d => {
-//         res.send(d);
-//     }).catch(err => console.log(err));
-// });
 
 app.listen(PORT, () => {
     console.log(`Server is run on http://${HOST}:${PORT}`);

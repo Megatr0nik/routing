@@ -4,17 +4,6 @@ const { checkUser } = require('./check-user.js');
 const { clientDataBase } = require('./connectToMongo.js');
 
 
-// const option = {
-//     projection: {
-//         _id: 1,
-//         firstName: 1,
-//         lastName: 1,
-//         avatar: 1,
-//         friends: 1,
-//         post: 1
-//     }
-// }
-
 exports.regUser = async (data) => {
 
     const client = await clientDataBase();
@@ -41,7 +30,7 @@ exports.regUser = async (data) => {
 
 exports.loginUser = async (loginData) => {
 
-    console.log(loginData)
+    // console.log(loginData)
     const client = await clientDataBase();
 
     try {

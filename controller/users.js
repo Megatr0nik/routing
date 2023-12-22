@@ -6,7 +6,7 @@ const HEADERS = {
 }
 
 const { loginUser, regUser, giveFriendsUser } = require("../services/dataBase");
-const { writeFile, readFileOnPath, createFolder } = require("../services/fs-worker");
+const { writeFile, readFileOnPath } = require("../services/fs-worker");
 
 
 const loginUserHandler = (req, res) => {
@@ -35,9 +35,7 @@ const registerUserHandler = (req, res) => {
                 res.set(HEADERS);
                 res.send(d);
             } else {
-                console.log(d)
-                createFolder(`./static/person/${d._id}/gallery`);
-                writeFile(avatar, `/person/${d._id}/avatar`);
+                writeFile(avatar, `/person/${d._id}/avatar/`);
                 res.set(HEADERS);
                 res.send(d);
             }
@@ -58,11 +56,21 @@ const postFriendsUserHandler = (req, res) => {
 }
 
 const getGalleryHandler = (req, res) => {
-    console.log(req.url);
+    // console.log(req.url);
     const data = readFileOnPath(req.url);
     res.set(HEADERS);
     res.send(data);
 
+}
+
+const postGalleryHandler = (req, res) => {
+
+    // console.log('FOTO', req.url);
+    const file = req.file;
+
+    writeFile(file, `/person${req.url}`);
+    res.set(HEADERS);
+    res.send(writeFile(file, `/person${req.url}`));
 }
 
 
@@ -71,5 +79,6 @@ module.exports = {
     loginUserHandler,
     registerUserHandler,
     postFriendsUserHandler,
-    getGalleryHandler
+    getGalleryHandler,
+    postGalleryHandler
 }
