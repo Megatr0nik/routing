@@ -88,3 +88,25 @@
 // }
 
 
+exports.postData = async (data, id) => {
+    const client = await clientDataBase();
+    console.log(id)
+    try {
+        const collection = client.db('data').collection('person');
+
+        await collection.updateOne({ _id: id }, { $push: { post: data } });
+        const user = await collection.findOne({ '_id': ObjectId(id) });
+        console.log(user);
+    } catch {
+        console.error('error');
+    } finally {
+        console.log('DB Close...')
+        await client.close();
+    }
+
+
+
+
+
+}
+

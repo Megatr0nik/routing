@@ -73,7 +73,18 @@
 //     res.send(writeFile(file, `/person${req.url}`));
 // }
 
+// const postPost = (req, res) => {
+//     const file = req.file
+//     const data = JSON.parse(req.body.postData)
 
+    // writeFile(file, `/person${req.url}`);
+//     const id = req.url.slice(1, 25);
+//     postData(data, id);
+//     console.log('post ', req.body)
+//     console.log(file)
+//     res.set(HEADERS);
+//     res.send();
+// }
 
 // module.exports = {
 //     loginUserHandler,
