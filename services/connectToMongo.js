@@ -1,24 +1,24 @@
 
-const dbUri = 'mongodb://localhost:27017/';
-// const onlineConStr = 'mongodb+srv://vasoshoni:shoni3birdie@birdie.tcqicss.mongodb.net/?retryWrites=true&w=majority';
+// const dbUri = 'mongodb://localhost:27017/';
+// const dbUri = 'mongodb+srv://vasoshoni:shoni3birdie@birdie.tcqicss.mongodb.net/?retryWrites=true&w=majority';
 
 
 
-const MongoClient = require('mongodb').MongoClient;
-const client = new MongoClient(dbUri);
+// const MongoClient = require('mongodb').MongoClient;
+// const client = new MongoClient(dbUri);
 
 
-exports.clientDataBase = async () => {
+// exports.clientDataBase = async () => {
 
-    try {
-        const conn = await client.connect();
+//     try {
+//         const conn = await client.connect();
 
-        console.log('DataBase connected...');
-        return conn;
+//         console.log('DataBase connected...');
+//         return conn;
 
-    } catch (err) {
-        await client.close();
-        console.log('DataBase error, close connection...');
-        console.log(err);
-    }
-}
+//     } catch (err) {
+//         await client.close();
+//         console.log('DataBase error, close connection...');
+//         console.log(err);
+//     }
+// }

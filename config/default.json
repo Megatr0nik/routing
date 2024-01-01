@@ -1,0 +1,8 @@
+{
+    "PORT": "8000",
+    "HOST":"localhost",
+    "mongoURL": "mongodb+srv://vasoshoni:shoni3birdie@birdie.tcqicss.mongodb.net/?retryWrites=true&w=majority",
+    "mongoURI": "mongodb://localhost:27017/data",
+    "secret": "maxsahka"
+
+}
