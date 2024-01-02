@@ -9,8 +9,9 @@ const { logUser } = require('../controller/login');
 
 const router = express.Router();
 
-const checkData = [check('email', 'Wrong email...').isEmail(),
-check('password', 'Min length password a 6 sumbols...').isLength({ min: 6 })
+const checkData = [
+    check('email', 'Wrong email...').isEmail(),
+    check('password', 'Min length password a 6 sumbols...').isLength({ min: 6 })
 ];
 
 

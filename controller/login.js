@@ -3,10 +3,16 @@ const bcrypt = require('bcryptjs');
 const { User } = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
 
+
 const config = require('config');
 
 
+
+
+
 exports.logUser = async (req, res) => {
+
+    console.log(req.url)
 
     try {
 
@@ -42,6 +48,8 @@ exports.logUser = async (req, res) => {
             config.get('secret'),
             { expiresIn: '30m' }
         );
+
+
 
         res.json({
             token,

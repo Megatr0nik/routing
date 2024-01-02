@@ -1,0 +1,28 @@
+img {
+    border: none;
+    border-radius: 5px;
+}
+
+.user {
+    display: flex;
+    justify-content:space-between;
+    height: 100px;
+    padding: 2px;
+    padding-right: 5px;
+    background-color: #c8c8c8;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.control-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.add-post-button {
+    margin: 2px;
+    width: auto;
+    height: 25px;
+    display: block;
+}

@@ -5,6 +5,8 @@ const { User } = require('../models/userSchema');
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
 
+
+
 const regUser = async (req, res) => {
     try {
         const errors = validationResult(req);
@@ -31,6 +33,7 @@ const regUser = async (req, res) => {
         const user = new User({ email: email, password: hashPassword });
 
         await user.save();
+
 
         res.status(201).json({
             message: 'User registration done'

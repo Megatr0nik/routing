@@ -1,0 +1,47 @@
+
+.authorization-container {
+    position: fixed;
+    display: flex;
+    width: 400px;
+    height: fit-content;
+    top: 30%;
+    flex-direction: column;
+    padding: 10px;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+
+.warning-info {
+    color: black;
+    margin: 0;
+    margin-top: 5%;
+    justify-content: center;
+    animation-name: hide;
+    animation-duration: 5.2s;
+    animation-timing-function:ease;
+}
+
+@keyframes hide {
+    from {
+        opacity: 0;
+        color: black;
+    }
+    25% {
+        opacity: 1;
+        color: red;
+    }
+    50%{
+        opacity: 1;
+        color: black;
+    }
+    75%{
+        opacity: 1;
+        color: red;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+

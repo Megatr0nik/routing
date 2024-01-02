@@ -1,0 +1,29 @@
+.form-container {
+    display:flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-title {
+    margin-bottom: 10px;
+}
+
+.login-input {
+    width: 60%;
+    height: 20%;
+}
+
+.submit-button {
+    margin: 10px;
+    width: 80px;
+}
+
+.image-uploads {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    padding: 5px;
+    cursor: pointer;
+    border: 1px black solid;
+    border-radius: 5px;
+}
