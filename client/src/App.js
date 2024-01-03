@@ -1,13 +1,18 @@
 
-import { Routes, Route } from 'react-router-dom';
+// import { Router, Route } from 'react-router-dom';
 
 
-import img from './img/bird.png';
+
 
 
 import './App.css';
-import AuthPage from './pages/auth-page';
-import { postRequest } from './services/request';
+// import AuthPage from './pages/auth-page';
+// import { postRequest } from './services/request';
+import { LoginContext } from './context/LoginContext';
+import { useLogin } from './hooks/loginHook'
+import { Header } from './components/header';
+import { MainRoutes } from './route';
+import { Routes } from 'react-router-dom';
 
 
 
@@ -16,26 +21,25 @@ import { postRequest } from './services/request';
 
 function App() {
 
+  const { token, userId, login, logout } = useLogin();
+  const isUser = !!token;
+  const route = MainRoutes(isUser);
+
   return (
+    <LoginContext.Provider
+      value={{ token, userId, isUser, login, logout }}
+    >
+      <>
+        <Header />
+        {/* <Routes> */}
+        {route}
+        {/* </Routes> */}
 
-    <Routes>
-      <Route exact path="/" element={
-        <>
-          <header className="title">
-            <span>BiRdie </span>
-            <img src={img} alt="logo" width="32" height="32" />
-          </header>
+        {/* <MainRoutes  /> */}
+      </>
 
-          <AuthPage post={postRequest} />
+    </LoginContext.Provider>
 
-          <footer className='footer'>--- Megatr0nik ---</footer>
-        </>
-      } />
-
-
-
-      {/* <Route path="*" element={<NotFound />}/> */}
-    </Routes>
   );
 }
 

@@ -1,6 +1,7 @@
 
-exports.opt = (req, res, next) => {
-    if (req.method === 'OPTION') {
-
+module.exports = (req, res, next) => {
+    if (req.method === 'OPTIONS') {
+        return next();
     }
+    next();
 }

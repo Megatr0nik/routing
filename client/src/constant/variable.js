@@ -1,6 +1,6 @@
 
 
-export const _BASE_URL = 'http://localhost:8000/';
+export const _BASE_URL = 'http://localhost:8000';
 
 
 

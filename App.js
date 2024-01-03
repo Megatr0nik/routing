@@ -4,7 +4,10 @@ const morgan = require('morgan');
 const router = require('./routes/index.js');
 const mongoose = require('mongoose');
 const config = require('config');
-var cors = require('cors')
+const cors = require('cors');
+
+
+
 
 const app = express();
 
@@ -25,10 +28,11 @@ app.use(cors());
 app.use('/api', router);
 
 
-app.options('*', (req, res) => {
-    res.set(HEADERS);
-    res.send('OK');
-});
+
+// app.options('*', (req, res) => {
+//     res.set(HEADERS);
+//     res.send('OK');
+// });
 
 
 

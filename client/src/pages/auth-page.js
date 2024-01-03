@@ -1,34 +1,46 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { LoginContext } from "../context/LoginContext";
+
+import { postRequest } from "../services/request"
+// import Request from "../services/requestWorker";
 
 
 
 
-const AuthPage = ({post}) => {
+const AuthPage = () => {
 
-const [data, setData] = useState({
-    email: '',
-    password: '',
-    auth: ''
-});
+    const logindata = useContext(LoginContext)
 
+    // console.log(logindata)
 
-const handlerData = (e) => {
-    const {name, value} = e.target;
-
-    setData({
-        ...data,
-        [name]: value
+    const [data, setData] = useState({
+        email: '',
+        password: ''
     });
-}
 
-const onSubmit = (e) => {
-    e.preventDefault();
 
-    const formData = new FormData();
-    formData.set('data', JSON.stringify(data));
-    post(formData, `/${data.auth}`)
-    console.log(post);
-}
+    const handlerData = (e) => {
+        const { name, value } = e.target;
+
+        setData({
+            ...data,
+            [name]: value
+        });
+    }
+
+
+    const onRegistration = () => {
+        postRequest(data, '/api/register')
+    }
+
+    const onLogin = async () => {
+        const incoming = await postRequest(data, '/api/login');
+
+
+        logindata.login(incoming.token, incoming.userId)
+        // Request.login(incoming);
+
+    }
 
 
     return (
@@ -36,38 +48,38 @@ const onSubmit = (e) => {
             <h1>Сторінка авторизації</h1>
 
             <div className="auth-form-container">
-                <form
-                encType="multipart/form-data"
-                name="auth-form"
-                onSubmit={onSubmit}
-                >
-                    <input
-                        type="email"
-                        name="email"
-                        autoComplete="on"
-                        onChange={handlerData}
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        autoComplete="off"
-                        onChange={handlerData}
-                    />
+                {/* <form
+                    encType="multipart/form-data"
+                    name="auth-form"
+                    onSubmit={onSubmit}
+                > */}
+                <input
+                    type="email"
+                    name="email"
+                    autoComplete="on"
+                    onChange={handlerData}
+                />
+                <input
+                    type="password"
+                    name="password"
+                    autoComplete="off"
+                    onChange={handlerData}
+                />
 
-                    <button
+                <button
                     name="auth"
                     value="login"
-                    onClick={handlerData}
-                    
-                    >Login</button>
+                    onClick={onLogin}
 
-                    <button
+                >Login</button>
+
+                <button
                     name="auth"
                     value="register"
-                    onClick={handlerData}
+                    onClick={onRegistration}
 
-                    >Register</button>
-                </form>
+                >Register</button>
+                {/* </form> */}
             </div>
 
 
