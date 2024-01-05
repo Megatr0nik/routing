@@ -9,7 +9,7 @@ const userSchema = new Schema({
         last: { type: String, default: '' }
     },
     date: { type: Date, default: Date.now() },
-    avatar: { type: String, default: 'default.jpg' },
+    avatar: { type: String, default: 'default.png' },
     posts: {
         id: { type: String, default: '' },
         data: { type: String, default: '' },

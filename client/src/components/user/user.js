@@ -1,13 +1,17 @@
+
+
 import './user.css';
+
 // import default_ava from '../../img/default_ava.jpg';
 
 
 
-const User = ({ props, url, setGallery, gallery }) => {
+const User = ({ id, props, url, setGallery, gallery }) => {
 
-    // console.log('user', props)
-
-    const { avatar, friends, firstName, lastName, _id } = props;
+    // const user = useContext(UserContext);
+    console.log('user', props)
+    const { name, avatar, friends, posts, date } = props;
+    // const { userId, avatar } = props;
 
     const onGallery = () => {
         setGallery(!gallery);
@@ -16,17 +20,18 @@ const User = ({ props, url, setGallery, gallery }) => {
     return (
         <div className='user' onMouseEnter={e => e.preventDefault()}>
             <img
-                src={`${url}person/${_id}/avatar/${avatar}`}
+                // src={`${url}/api/person/${id}/avatar/${avatar}`}
+                src={`${url}/api/static/img/${avatar}`}
                 alt="img"
                 width='100'
                 height='100'
-                title={`${firstName} ${lastName}`}
+                title={`${name.first} ${name.last}`}
                 onError={e => console.log(e)}
             />
 
             <div className='info-container'>
                 <div>Друзів: {friends.length}</div>
-                <div>{`${firstName} ${lastName}`}</div>
+                <div>{`${name.first} ${name.last}`}</div>
             </div>
 
             <div className='control-container'>

@@ -20,14 +20,14 @@ const checkData = [
 router.post('/register', opt, checkData, regUser);
 router.post('/login', opt, checkData, logUser);
 
-// router.all('*', (req, res) => {
-//     console.log(req.body);
-//     console.log(req.url);
+router.all('/avatar', (req, res) => {
+    console.log(req.body);
+    console.log(req.url);
 
-//     res.status(200).json({
-//         message: 'Ok'
-//     })
-// })
+    res.status(200).json({
+        message: 'Ok'
+    })
+})
 
 
 

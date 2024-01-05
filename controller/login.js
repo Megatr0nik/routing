@@ -49,11 +49,17 @@ exports.logUser = async (req, res) => {
             { expiresIn: '30m' }
         );
 
-
-
+        console.log(user);
+        const { id, name, avatar, friends, posts, date } = user;
         res.json({
             token,
-            userId: user.id
+            userId: id,
+            name,
+            avatar,
+            friends,
+            posts,
+            date
+
         })
 
     } catch (e) {

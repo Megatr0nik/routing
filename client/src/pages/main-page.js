@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 
 import User from '../components/user/user';
@@ -11,9 +11,14 @@ import { _BASE_URL } from '../constant/variable';
 
 import './main-page.css';
 import ModalPost from '../components/modal/modal-post';
+import { LoginContext } from '../context/LoginContext';
 
 
-const Main = ({ props }) => {
+const Main = () => {
+
+    const { userId, data, isUser, logout } = useContext(LoginContext)
+
+    console.log(data)
 
     const [gallery, setGallery] = useState(false);
     const [active, setModalActive] = useState({ active: false, image: null });
@@ -30,7 +35,7 @@ const Main = ({ props }) => {
             <section className="main-content">
                 {gallery ? <Gallery
                     gallery={gallery}
-                    id={props._id}
+                    // id={props._id}
                     setGallery={setGallery}
                     setModalActive={setModalActive}
                 /> : null}
@@ -38,7 +43,8 @@ const Main = ({ props }) => {
             <aside className='content-right'>
 
                 <User
-                    props={props}
+                    id={userId}
+                    props={data}
                     url={_BASE_URL}
                     setGallery={setGallery}
                     gallery={gallery}
@@ -46,7 +52,7 @@ const Main = ({ props }) => {
 
                 <div className='friends-container'>
                     <h4>Друзі</h4>
-                    <Friends friends={props.friends} url={_BASE_URL} />
+                    {/* <Friends friends={props.friends} url={_BASE_URL} /> */}
                 </div>
             </aside>
 

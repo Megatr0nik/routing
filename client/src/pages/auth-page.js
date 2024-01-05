@@ -36,9 +36,15 @@ const AuthPage = () => {
     const onLogin = async () => {
         const incoming = await postRequest(data, '/api/login');
 
+        const { token, userId, name, avatar, date, friends, posts } = incoming;
+        logindata.login(token, userId, {
+            name,
+            avatar,
+            date,
+            friends,
+            posts
+        });
 
-        logindata.login(incoming.token, incoming.userId)
-        // Request.login(incoming);
 
     }
 

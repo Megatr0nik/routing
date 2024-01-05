@@ -5,38 +5,44 @@ export const useLogin = () => {
 
     const [token, setToken] = useState(null);
     const [userId, setId] = useState(null);
-    const [auth, setAuth] = useState(false);
+    const [data, setOther] = useState(null);
 
 
-    const login = useCallback((tok, id) => {
+    const login = useCallback((tok, id, other) => {
         setToken(tok);
         setId(id);
+        setOther(other)
+
+        // console.log(other)
 
         localStorage.setItem('userData', JSON.stringify({
             token: tok,
-            userId: id
+            userId: id,
+            data: other
         }));
     }, []);
 
     const logout = useCallback(() => {
         setToken(null);
         setId(null);
+        setOther(null)
         localStorage.removeItem('userData');
     }, []);
 
     useEffect(() => {
         const data = JSON.parse(localStorage.getItem('userData'));
-        console.log(data);
+        // console.log(data);
 
         if (data && data.token) {
-            login(data.token, data.userId);
+            // console.log(data.token, data.userId);
+            login(data.token, data.userId, data.data);
         }
-        setAuth(true);
+        // setAuth(true);
 
     }, [login]);
 
 
-    return { token, userId, auth, login, logout }
+    return { token, userId, data, login, logout }
 }
 
 
