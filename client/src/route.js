@@ -4,7 +4,7 @@ import AuthPage from './pages/auth-page';
 
 
 export const MainRoutes = isUser => {
-    console.log(isUser)
+
     if (isUser) {
         return (
             <>

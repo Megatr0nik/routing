@@ -19,15 +19,14 @@ const checkData = [
 
 router.post('/register', opt, checkData, regUser);
 router.post('/login', opt, checkData, logUser);
-
-router.all('/avatar', (req, res) => {
-    console.log(req.body);
-    console.log(req.url);
-
-    res.status(200).json({
-        message: 'Ok'
+router.get('*', opt, (req, res) => {
+    console.log(req.user);
+    res.json({
+        token: req.user
     })
-})
+});
+
+
 
 
 

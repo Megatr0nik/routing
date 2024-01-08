@@ -21,7 +21,6 @@ function App() {
 
   const { token, userId, data, login, logout } = useLogin();
   const isUser = !!token;
-  // console.log(isUser, token)
   const route = MainRoutes(isUser);
 
   return (

@@ -23,16 +23,14 @@ const HEADERS = {
 app.use(morgan('short'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static('static'));
 app.use(cors());
+app.use(express.static('static'));
+
 app.use('/api', router);
 
 
 
-// app.options('*', (req, res) => {
-//     res.set(HEADERS);
-//     res.send('OK');
-// });
+
 
 
 

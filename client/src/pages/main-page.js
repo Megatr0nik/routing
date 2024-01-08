@@ -12,13 +12,19 @@ import { _BASE_URL } from '../constant/variable';
 import './main-page.css';
 import ModalPost from '../components/modal/modal-post';
 import { LoginContext } from '../context/LoginContext';
+import { useAuth } from '../hooks/authHook';
 
 
 const Main = () => {
 
-    const { userId, data, isUser, logout } = useContext(LoginContext)
+    const { token, userId, data, isUser, logout } = useContext(LoginContext);
+
+    const { checkUser } = useAuth();
 
     console.log(data)
+
+    const isTrue = checkUser(token);
+    console.log(isTrue);
 
     const [gallery, setGallery] = useState(false);
     const [active, setModalActive] = useState({ active: false, image: null });

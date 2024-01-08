@@ -1,7 +1,8 @@
 import { useContext, useState } from "react"
 import { LoginContext } from "../context/LoginContext";
 
-import { postRequest } from "../services/request"
+// import { postRequest } from "../services/request"
+import { useHttp } from "../hooks/httpHook";
 // import Request from "../services/requestWorker";
 
 
@@ -10,6 +11,7 @@ import { postRequest } from "../services/request"
 const AuthPage = () => {
 
     const logindata = useContext(LoginContext)
+    const { request } = useHttp();
 
     // console.log(logindata)
 
@@ -30,11 +32,18 @@ const AuthPage = () => {
 
 
     const onRegistration = () => {
-        postRequest(data, '/api/register')
+
+
+        // postRequest(data, '/api/register')
     }
 
     const onLogin = async () => {
-        const incoming = await postRequest(data, '/api/login');
+
+        const incoming = await request('/api/login', 'POST', data);
+
+        // console.log(incoming);
+
+        // const incoming = await postRequest(data, '/api/login');
 
         const { token, userId, name, avatar, date, friends, posts } = incoming;
         logindata.login(token, userId, {
@@ -44,8 +53,6 @@ const AuthPage = () => {
             friends,
             posts
         });
-
-
     }
 
 

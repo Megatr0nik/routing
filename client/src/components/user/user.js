@@ -21,7 +21,7 @@ const User = ({ id, props, url, setGallery, gallery }) => {
         <div className='user' onMouseEnter={e => e.preventDefault()}>
             <img
                 // src={`${url}/api/person/${id}/avatar/${avatar}`}
-                src={`${url}/api/static/img/${avatar}`}
+                src={`${url}/img/${avatar}`}
                 alt="img"
                 width='100'
                 height='100'
