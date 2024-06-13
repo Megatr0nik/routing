@@ -1,6 +1,8 @@
-img {
-    border: none;
-    border-radius: 5px;
+.avatar {
+    border: 2px solid black;
+    /* border: none; */
+    border-radius: 5%;
+    /* background-color:antiquewhite; */
 }
 
 .user {

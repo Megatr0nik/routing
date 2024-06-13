@@ -15,31 +15,31 @@ export const useLogin = () => {
 
         // console.log(other)
 
-        localStorage.setItem('userData', JSON.stringify({
-            token: tok,
-            userId: id,
-            data: other
-        }));
+        // localStorage.setItem('userData', JSON.stringify({
+        //     token: tok,
+        //     userId: id,
+        //     data: other
+        // }));
     }, []);
 
     const logout = useCallback(() => {
         setToken(null);
         setId(null);
         setOther(null)
-        localStorage.removeItem('userData');
+        // localStorage.removeItem('userData');
     }, []);
 
-    useEffect(() => {
-        const data = JSON.parse(localStorage.getItem('userData'));
-        // console.log(data);
+    // useEffect(() => {
+    //     const data = JSON.parse(localStorage.getItem('userData'));
+    //     // console.log(data);
 
-        if (data && data.token) {
-            // console.log(data.token, data.userId);
-            login(data.token, data.userId, data.data);
-        }
-        // setAuth(true);
+    //     if (data && data.token) {
+    //         // console.log(data.token, data.userId);
+    //         login(data.token, data.userId, data.data);
+    //     }
+    //     // setAuth(true);
 
-    }, [login]);
+    // }, [login]);
 
 
     return { token, userId, data, login, logout }

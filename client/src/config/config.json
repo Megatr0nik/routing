@@ -1,0 +1,6 @@
+{
+    "_BASE_URL": "http://localhost:8000",
+    "register": "/api/auth/register",
+    "login": "/api/auth/login",
+    "refresh": "/api/auth/refresh"
+}

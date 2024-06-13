@@ -1,72 +1,80 @@
 import { useContext, useState } from 'react';
 
 
+import { useTime } from '../hooks/timeLog';
+
+import { useHttp } from '../hooks/httpHook';
+
 import User from '../components/user/user';
+
 import Gallery from '../components/gallery/gallery';
-import { Friends } from '../components/widget/friends';
+import EmptyGallery from '../components/gallery/empty-gallery';
+
 import { Modal } from '../components/modal/modal';
 import { ModalImage } from '../components/modal/modal-image';
 
-import { _BASE_URL } from '../constant/variable';
-
 import './main-page.css';
-import ModalPost from '../components/modal/modal-post';
+
 import { LoginContext } from '../context/LoginContext';
-import { useAuth } from '../hooks/authHook';
+import { useGallery } from '../hooks/galleryHook';
+
 
 
 const Main = () => {
 
-    const { token, userId, data, isUser, logout } = useContext(LoginContext);
+    const { logout, userId, data } = useContext(LoginContext);
 
-    const { checkUser } = useAuth();
+    const { loading } = useHttp();
 
-    console.log(data)
+    const { getTime } = useTime();
 
-    const isTrue = checkUser(token);
-    console.log(isTrue);
+    // const { getGallery } = useGallery();
 
-    const [gallery, setGallery] = useState(false);
-    const [active, setModalActive] = useState({ active: false, image: null });
+    const [gallery, setGalleryOn] = useState(false);
+    const [activeModal, setModalActive] = useState({ active: false, image: null, arr: [], src: '' });
 
-    // console.log('Main', gallery)
+    console.log("Main page ==>", getTime(), gallery)
+
+
+    const onGallery = (id) => {
+        return <Gallery
+            userId={id}
+            setModalActive={setModalActive}
+            setGalleryOn={setGalleryOn}
+            gallery={gallery}
+        />
+    }
 
     return (
         <div className="main-container">
-            <Modal
-                active={active.active}
-                content={<ModalPost />}
-            />
-
             <section className="main-content">
-                {gallery ? <Gallery
-                    gallery={gallery}
-                    // id={props._id}
-                    setGallery={setGallery}
-                    setModalActive={setModalActive}
-                /> : null}
+                {gallery && onGallery(userId)}
             </section>
             <aside className='content-right'>
-
-                <User
-                    id={userId}
-                    props={data}
-                    url={_BASE_URL}
-                    setGallery={setGallery}
-                    gallery={gallery}
-                />
+                <User setGalleryOn={setGalleryOn} gallery={gallery} />
 
                 <div className='friends-container'>
                     <h4>Друзі</h4>
                     {/* <Friends friends={props.friends} url={_BASE_URL} /> */}
                 </div>
+                <button
+                    onClick={logout}
+                >
+                    Logout
+                </button>
+
+                <div style={{ margin: 50 }}>
+                    {userId}
+                </div>
+
             </aside>
 
-            {active.active ?
+            {activeModal.active &&
                 <Modal
-                    active={active.active}
-                    content={<ModalImage image={active.image} setModalActive={setModalActive} />}
-                /> : null}
+                    active={activeModal.active}
+                    close={setModalActive}
+                    content={<ModalImage props={activeModal} />}
+                />}
         </div>
     );
 }

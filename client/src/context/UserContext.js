@@ -9,5 +9,7 @@ export const UserContext = createContext({
         last: ''
     },
     friends: null,
-    post: null
-})
+    post: null,
+    arrPhoto: [],
+    gallery: false
+});

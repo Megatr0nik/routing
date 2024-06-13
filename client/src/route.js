@@ -3,7 +3,7 @@ import Main from './pages/main-page';
 import AuthPage from './pages/auth-page';
 
 
-export const MainRoutes = isUser => {
+export const MainRoutes = (isUser) => {
 
     if (isUser) {
         return (

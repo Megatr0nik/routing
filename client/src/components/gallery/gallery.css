@@ -9,6 +9,61 @@
     overflow-y: auto;
 }
 
+.single-image {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.naw-string {
+    display: flex;
+    /* width: 100px; */
+    height: 20px;
+    /* align-items: center; */
+    justify-content: center;
+    padding-top: 10px;
+
+}
+
+.naw-element {
+    width: 0px;
+    height: 0px;
+    margin-left: 2px;
+    margin-right: 2px;
+    border-radius: 50%;
+}
+
+.black {
+    border: 10px rgba(0, 0, 0, 0.5) solid;
+}
+
+.white {
+    border: 10px rgba(255, 255, 255, 0.5) solid;
+}
+
+.controll {
+    height: 100px;
+    width: 50px;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    filter: opacity(50%);
+
+    /* background-color: white; */
+}
+
+.left {
+ transform: rotate(180deg);
+}
+
+.hover {
+    transition: all 0.5s ease-in-out;
+}
+
+.hover:hover {
+    scale: 1.1;
+}
+
 
 .other {
     background-color: aqua;
@@ -27,14 +82,7 @@
     margin: 2px;
     background-color: black;
     border: 2px rgba(0, 0, 0, 0.329) solid;
-    transition: all 0.5s ease-in-out;
-
-}
-
-.img-item:hover {
-    /* opacity: 0.7; */
-    scale: 1.1;
-    /* background-color: black; */
+    border-radius: 5%;
 }
 
 .add-foto {

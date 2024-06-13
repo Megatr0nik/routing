@@ -4,8 +4,9 @@ const empty = () => { }
 
 export const LoginContext = createContext({
     token: null,
-    userID: null,
+    userId: null,
     login: empty,
     logout: empty,
+    loading: null,
     data: null
 })

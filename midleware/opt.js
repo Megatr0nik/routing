@@ -7,17 +7,28 @@ module.exports = (req, res, next) => {
         return next();
     }
 
+
+    if (!req.headers.authorization) {
+        return next();
+    }
+
     try {
 
-        const token = req.headers.authorization;
-        console.log("check =>", token);
-        const checkToken = jwt.verify(token, config.get("secret"));
+        const token = req.headers.authorization.split(" ")[1];
 
-        req.user = checkToken;
-        console.log("check =>", token);
+        const decoded = jwt.verify(token, config.get("secret"), (err, decoded) => {
+            if (err) {
+                console.log('error =>', err.message)
+            }
+            return decoded;
+        });
+        console.log('decoded', decoded)
+        req.user = decoded;
+
         next();
     } catch (error) {
-        console.log(error)
+
+        // console.log(error)
         return next();
     }
 

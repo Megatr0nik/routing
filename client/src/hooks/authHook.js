@@ -6,12 +6,14 @@ export const useAuth = () => {
 
     const { request } = useHttp();
 
-    const checkUser = (token, id) => {
+    const checkUser = async (token) => {
 
-        const data = request('/api', 'GET', null, {
-            Authorization: `${token}`
+        const data = await request('/api/auth', 'GET', null, {
+            authorization: `Bearer ${token}`
         });
 
+
+        console.log('Auth: ', data);
         return data;
     }
 
