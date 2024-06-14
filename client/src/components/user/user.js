@@ -1,7 +1,5 @@
 
-import { useContext, useState } from 'react';
-
-import { useGallery } from '../../hooks/galleryHook';
+import { useContext } from 'react';
 
 import './user.css';
 import { LoginContext } from '../../context/LoginContext';
@@ -12,9 +10,7 @@ const User = ({ setGalleryOn, gallery }) => {
     const { userId, data, } = useContext(LoginContext);
     const { name, avatar, friends, posts, date } = data;
 
-    const { getGallery } = useGallery();
-
-    // const [buttonOn, setButtonOn] = useState(false);
+    // const { getGallery } = useGallery();
 
     const onGallery = () => {
         setGalleryOn(!gallery);
@@ -24,14 +20,13 @@ const User = ({ setGalleryOn, gallery }) => {
         <div className='user' onMouseEnter={e => e.preventDefault()}>
             <img
                 className='avatar'
-                // src={`${url}/api/person/${id}/avatar/${avatar}`}
-                src={`${config._BASE_URL}/img/${avatar}`}
-                alt="img"
+                src={`${config._BASE_URL}/api/person/${userId}/avatar/${avatar}`}
+                alt="img-avatar"
                 width='96'
                 height='96'
                 title={`${name.first} ${name.last}`}
-                onError={e => console.log(e)}
-                onClick={() => console.log("Click")}
+                onError={e => e.target.src = `${config._BASE_URL}/img/${avatar}`}
+            // onClick={() => console.log("Click")}
             />
 
             <div className='info-container'>

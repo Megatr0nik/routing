@@ -1,43 +1,31 @@
-
-import { useCallback, useEffect, useState } from "react";
 import config from "../../config/config.json";
-
-
 import './gallery.css';
-import EmptyGallery from "./empty-gallery.js";
-// import { useGallery } from "../../hooks/galleryHook.js";
 
-import { useTime } from "../../hooks/timeLog.js";
+import { useEffect, useRef, useState } from "react";
+
 import { useHttp } from "../../hooks/httpHook.js";
+import EmptyGallery from "./empty-gallery.js";
 
 
-const Gallery = ({ userId, gallery, setModalActive, setGalleryOn }) => {
-
-    // const { getTime } = useTime();
+const Gallery = ({ userId, setModalActive, setGalleryOn }) => {
 
     const { request } = useHttp();
-
     const [arrImage, setArrGallery] = useState([]);
-    // const [arrColection, setArrCollection] = useState([]);
-
-    let arrColection = [];
+    let arrColection = useRef([]);
 
     const onModal = (e) => {
-
-        // console.log('gallery ==>', arrColection);
-
         setModalActive({
             active: true,
             image: e.target,
-            arr: arrColection,
+            arr: arrColection.current,
             src: `${config._BASE_URL}/person/${userId}/gallery/`
         });
     };
 
 
     const addFoto = (e) => {
-        const formData = new FormData();
 
+        const formData = new FormData();
         formData.set('image', e.target.files['0']);
         formData.set('id', userId);
 
@@ -53,11 +41,8 @@ const Gallery = ({ userId, gallery, setModalActive, setGalleryOn }) => {
         const loadData = async () => {
             await request(`/api/person/${userId}/gallery/`, 'GET', null)
                 .then((d) => {
-                    // const data = d.data;
-                    arrColection = d.data;
-                    console.log('gallery ==>', arrColection);
-
-                    return arrColection;
+                    arrColection.current = d.data;
+                    return arrColection.current;
                 })
                 .then((d) => {
                     setArrGallery(d.map((item, i) => {
@@ -101,25 +86,9 @@ const Gallery = ({ userId, gallery, setModalActive, setGalleryOn }) => {
 
                     />
                 </label>
-
             </div>
         </>
-
     );
 }
 
 export default Gallery;
-
-
-// const addFoto = (e) => {
-//     const formData = new FormData();
-
-//     formData.set('image', e.target.files['0']);
-//     formData.set('id', id);
-
-//     // request(`/api/person/${id}/gallery/`, 'POST', formData, {}, true)
-//     //     .then(() => setGallery(false))
-//     //     .then(() => setTimeout(() => {
-//     //         setGallery(true)
-//     //     }), 1000);
-// }
